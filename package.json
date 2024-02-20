@@ -1,0 +1,17 @@
+{
+  "name": "stockhub.v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd server && yarn start",
+    "bot": "cd bot && yarn start",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn bot\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
