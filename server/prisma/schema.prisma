@@ -13,7 +13,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   id       Int    @id @default(autoincrement())
-  chat_id  BigInt @unique
+  chat_id  Int    @unique
   username String
 
   email  String @unique
@@ -42,7 +42,7 @@ model UserOrders {
   updatedAt DateTime @updatedAt
 
   id       Int             @id @default(autoincrement())
-  order_id BigInt
+  order_id Int
   status   userOrderStatus
 
   product Product[]
@@ -66,8 +66,8 @@ model Product {
 
   orderId      Int?
   order        UserOrders?  @relation(fields: [userOrdersId], references: [id])
-  UserBasket   UserBasket[]
   userOrdersId Int?
+  UserBasket   UserBasket[]
 }
 
 enum userOrderStatus {
