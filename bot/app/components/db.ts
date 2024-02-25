@@ -98,4 +98,31 @@ async function getProfile(chatId: number): Promise<userInfo | null> {
   }
 }
 
-export { connectToDatabase, add_user, sendStaic, getProfile };
+async function test() {
+  try {
+    const connection = await connectToDatabase();
+
+    const [rows]: any = await connection.execute("SELECT * FROM poizon");
+
+    if (!rows) {
+      console.log("No rows");
+    }
+
+    const out = {
+      id: rows[0].id,
+      link: rows[0].link,
+      name: rows[0].name,
+      article: rows[0].article,
+      size: rows[0].size,
+      price: rows[0].price,
+      photo: rows[0].photo,
+    };
+
+    return out;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export { connectToDatabase, add_user, sendStaic, getProfile, test };

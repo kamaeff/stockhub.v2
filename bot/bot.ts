@@ -8,7 +8,12 @@ import TgBot, {
 
 import { push_profile } from "./app/components/profile";
 
-import { connectToDatabase, add_user, sendStaic } from "./app/components/db";
+import {
+  connectToDatabase,
+  add_user,
+  sendStaic,
+  test,
+} from "./app/components/db";
 
 const bot = new TgBot(process.env.TOKEN!, { polling: true });
 connectToDatabase();
@@ -45,6 +50,7 @@ bot.onText(/\/start/, async (msg) => {
             { text: "📝 Поиск по артиклу", callback_data: "articul" },
           ],
           [{ text: "✌🏻 Мой профиль", callback_data: "profile" }],
+          [{ text: "✌test", callback_data: "test" }],
         ],
       } as InlineKeyboardMarkup,
     });
@@ -86,6 +92,14 @@ bot.on("callback_query", async (callbackQuery: CallbackQuery) => {
 
     case "profile":
       await push_profile(bot, username, chatId, messageId);
+      break;
+
+    case "test":
+      const output: any = await test();
+      console.log(output);
+      bot.sendPhoto(chatId, output.photo, {
+        caption: `${output.link}\n\n${output.name}\n\n${output.article}\n\n${output.size}\n\n${output.price}`,
+      });
       break;
   }
 });
