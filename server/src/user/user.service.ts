@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { AddDto } from './types/add.dto';
+import { AddDto } from '../dto/add.dto';
 import { PrismaService } from 'src/prisma.service';
-import { faker } from '@faker-js/faker';
 
 @Injectable()
 export class UserService {
@@ -14,18 +13,13 @@ export class UserService {
       },
     });
 
-    console.log(dto);
+    console.log(existUser);
     if (existUser) throw new BadRequestException('User already exist');
 
     const user = await this.prisma.user.create({
       data: {
-        // chat_id: faker.number
-        //   .int({ min: 10000000, max: 1000000000 })
-        //   .toString(),
-        // username: faker.person.firstName(),
-        // email: faker.internet.email(),
         chat_id: dto.chat_id,
-        username: dto.chat_id,
+        username: dto.username,
         email: dto.email,
         fio: dto.fio,
         locale: dto.locale,

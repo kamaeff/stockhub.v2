@@ -16,7 +16,7 @@ model User {
   chat_id  String @unique
   username String
 
-  email  String @unique
+  email  String
   fio    String
   locale String
 
@@ -68,6 +68,13 @@ model Product {
   order        UserOrders?  @relation(fields: [userOrdersId], references: [id])
   userOrdersId Int?
   UserBasket   UserBasket[]
+}
+
+model staticPhoto {
+  id      Int    @id @default(autoincrement())
+  name    String
+  caption String
+  photo   Bytes
 }
 
 enum userOrderStatus {

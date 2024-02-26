@@ -1,63 +1,93 @@
 import * as dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
-import TgBot from "node-telegram-bot-api";
+import TgBot, { Chat, InlineKeyboardMarkup } from "node-telegram-bot-api";
 
 // import { push_profile } from "./app/components/profile";
 
 import {
   // connectToDatabase,
   add_user,
-  // sendStaic,
+  getPhoto,
   // test,
 } from "./app/components/db";
 
 import { createUserDto } from "./app/components/types/db_types";
+import { userInfo } from "os";
 
 const bot = new TgBot(process.env.TOKEN!, { polling: true });
 console.log("App create by Anton Kamaev");
 
+interface UserStorage {
+  [key: number]: { status: string; caption: string };
+}
+
+let userStorage: UserStorage = {};
+
 bot.onText(/\/start/, async (msg) => {
-  const chatId = msg.chat.id;
-  const messageId = msg.message_id;
+  const {
+    message_id,
+    chat: { id, first_name },
+  } = msg;
 
   const data: createUserDto = {
-    chat_id: `${chatId}`,
-    username: `${msg.chat.first_name}`,
-    email: "kamaeff2@gmail.com",
-    fio: "",
-    locale: "",
+    chat_id: `${id}`,
+    username: `${first_name}`,
+    email: "none",
+    fio: "none",
+    locale: "none",
   };
 
-  const add = await add_user(data);
+  await add_user(data);
+  const photo = await getPhoto("logo");
 
-  add == false
-    ? bot.sendMessage(chatId, "user already added")
-    : bot.sendMessage(chatId, "Hi");
+  if (photo === false) bot.sendMessage(id, "error");
+  userStorage[id] = {
+    caption: photo.caption,
+    status: "none",
+  };
 
-  // const photo = await sendStaic("logo");
-  //
-  // if (photo) {
-  //   return bot.sendPhoto(msg.chat.id, photo.photo, {
-  //     caption: `<b>✌🏻 Yo ${msg.chat.first_name}! </b>${photo.caption}`,
-  //     parse_mode: "HTML",
-  //     reply_markup: {
-  //       inline_keyboard: [
-  //         [
-  //           {
-  //             text: "⚡️ Начать пользоваться",
-  //             web_app: { url: "https://stockhub12.netlify.app" },
-  //           },
-  //           { text: "📝 Поиск по артиклу", callback_data: "articul" },
-  //         ],
-  //         [{ text: "✌🏻 Мой профиль", callback_data: "profile" }],
-  //         [{ text: "✌test", callback_data: "test" }],
-  //       ],
-  //     } as InlineKeyboardMarkup,
-  //   });
-  // } else {
-  //   bot.sendMessage(chatId, "Ошибка");
-  // }
+  await bot.deleteMessage(id, message_id - 1);
+  await bot.sendPhoto(id, Buffer.from(photo.photo.data), {
+    caption: photo.caption,
+    parse_mode: "HTML",
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: "⚡️ Начать пользоваться",
+            web_app: { url: "https://stockhub12.netlify.app" },
+          },
+          { text: "📝 Поиск по артиклу", callback_data: "articul" },
+        ],
+        [{ text: "✌🏻 Мой профиль", callback_data: "profile" }],
+        [{ text: "✌test", callback_data: "test" }],
+      ],
+    } as InlineKeyboardMarkup,
+  });
+});
+
+bot.on("text", async (msg) => {
+  const {
+    chat: { id, first_name },
+    text,
+    message_id,
+  } = msg;
+
+  if (userStorage[id]) {
+    const currentState = userStorage[id].status;
+
+    switch (currentState) {
+      case "awaitEmail":
+        await bot.deleteMessage(id, message_id);
+
+        break;
+
+      case "none":
+        bot.deleteMessage(id, message_id);
+        break;
+    }
+  }
 });
 
 // bot.on("callback_query", async (callbackQuery: CallbackQuery) => {
