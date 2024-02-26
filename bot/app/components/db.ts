@@ -2,7 +2,7 @@ import { createUserDto } from "./types/db_types";
 
 async function add_user(data: createUserDto) {
   try {
-    const response = await fetch("http://localhost:3001/api/user/add", {
+    const response = await fetch(`${process.env.URL}/user/add`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
@@ -21,7 +21,7 @@ async function add_user(data: createUserDto) {
 
 async function getPhoto(data: string) {
   try {
-    const response = await fetch("http://localhost:3001/api/photo/get", {
+    const response = await fetch(`${process.env.URL}/photo/get`, {
       method: "POST",
       body: JSON.stringify({ data }),
       headers: { "Content-Type": "application/json" },
