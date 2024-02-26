@@ -1,14 +1,9 @@
 import * as dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
-import { DateTime } from "luxon";
+import TgBot from "node-telegram-bot-api";
 
-import TgBot, {
-  CallbackQuery,
-  InlineKeyboardMarkup,
-} from "node-telegram-bot-api";
-
-import { push_profile } from "./app/components/profile";
+// import { push_profile } from "./app/components/profile";
 
 import {
   // connectToDatabase,
@@ -29,23 +24,16 @@ bot.onText(/\/start/, async (msg) => {
   const data: createUserDto = {
     chat_id: `${chatId}`,
     username: `${msg.chat.first_name}`,
-    email: "",
+    email: "kamaeff2@gmail.com",
     fio: "",
     locale: "",
   };
 
   const add = await add_user(data);
-  console.log(
-    add === true
-      ? `User ${msg.chat.id} added`
-      : `User ${msg.chat.id} already added`,
-  );
-  if (add === false) {
-    bot.deleteMessage(chatId, messageId - 1);
-    bot.deleteMessage(chatId, messageId - 2);
-  }
 
-  bot.sendMessage(chatId, "Hi");
+  add == false
+    ? bot.sendMessage(chatId, "user already added")
+    : bot.sendMessage(chatId, "Hi");
 
   // const photo = await sendStaic("logo");
   //

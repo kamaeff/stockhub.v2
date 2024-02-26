@@ -2,7 +2,8 @@ import { createUserDto } from "./types/db_types";
 
 async function add_user(data: createUserDto) {
   try {
-    const response = await fetch("http://localhost:3001/user/add", {
+    console.log(data);
+    const response = await fetch("http://localhost:3001/api/user/add", {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },

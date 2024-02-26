@@ -14,20 +14,25 @@ export class UserService {
       },
     });
 
+    console.log(dto);
     if (existUser) throw new BadRequestException('User already exist');
 
     const user = await this.prisma.user.create({
       data: {
-        chat_id: faker.number
-          .int({ min: 10000000, max: 1000000000 })
-          .toString(),
-        username: faker.person.firstName(),
-        email: faker.internet.email(),
-        fio: 'none',
-        locale: 'none',
+        // chat_id: faker.number
+        //   .int({ min: 10000000, max: 1000000000 })
+        //   .toString(),
+        // username: faker.person.firstName(),
+        // email: faker.internet.email(),
+        chat_id: dto.chat_id,
+        username: dto.chat_id,
+        email: dto.email,
+        fio: dto.fio,
+        locale: dto.locale,
       },
     });
 
+    console.log(user);
     return user;
   }
 }
