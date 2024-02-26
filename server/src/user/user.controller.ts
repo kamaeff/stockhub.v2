@@ -11,7 +11,7 @@ import { AddDto } from './types/add.dto';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)

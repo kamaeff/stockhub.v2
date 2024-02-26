@@ -4,5 +4,4 @@ export type createUserDto = {
   email: string;
   fio: string;
   locale: string;
-  createdAt: Date;
 };

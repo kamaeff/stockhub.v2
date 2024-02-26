@@ -16,7 +16,7 @@ lerna-debug.log*
 .DS_Store
 
 #prisma
-/src/prisma/migrations/
+/prisma/migrations/
 
 # Tests
 /coverage

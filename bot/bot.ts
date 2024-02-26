@@ -31,8 +31,7 @@ bot.onText(/\/start/, async (msg) => {
     username: `${msg.chat.first_name}`,
     email: "",
     fio: "",
-    locale: "ru",
-    createdAt: DateTime.local().toISO(),
+    locale: "",
   };
 
   const add = await add_user(data);

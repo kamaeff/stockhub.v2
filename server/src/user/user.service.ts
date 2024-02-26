@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async addUser(dto: AddDto) {
     const existUser = await this.prisma.user.findUnique({
@@ -18,7 +18,9 @@ export class UserService {
 
     const user = await this.prisma.user.create({
       data: {
-        chat_id: faker.number.int({ min: 100000000, max: 1000000000 }),
+        chat_id: faker.number
+          .int({ min: 10000000, max: 1000000000 })
+          .toString(),
         username: faker.person.firstName(),
         email: faker.internet.email(),
         fio: 'none',
