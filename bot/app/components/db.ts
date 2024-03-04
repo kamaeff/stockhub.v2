@@ -10,8 +10,10 @@ async function add_user(data: createUserDto) {
 
     if (response.ok) {
       console.log("add user");
+      return true;
     } else {
       console.log("user already added");
+      return true;
     }
   } catch (error) {
     console.error("Error adding user:", error);
@@ -39,4 +41,21 @@ async function getPhoto(data: string) {
   }
 }
 
-export { add_user, getPhoto };
+async function getProfile(chat_id: string) {
+  try {
+    const response = await fetch(`${process.env.URL}/user/get`, {
+      method: "POST",
+      body: JSON.stringify({ chat_id }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) throw new Error("profile not found");
+
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    return false;
+  }
+}
+
+export { add_user, getPhoto, getProfile };

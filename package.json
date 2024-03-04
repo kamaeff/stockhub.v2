@@ -6,7 +6,8 @@
   "scripts": {
     "server": "cd server && yarn run start:dev",
     "bot": "cd bot && yarn start",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn bot\"",
+    "client": "cd client && yarn dev",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn bot\" \"yarn client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

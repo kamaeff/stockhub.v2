@@ -17,13 +17,30 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: var(--rubik), sans-serif;
+
+  color: var(--text);
+  background-color: #EEEEEE;
+}
+
+.modal {
+  z-index: 9999;
+  overflow: hidden;
+  background: #fff;
+
+  top: 105px;
+
+  border-top-right-radius: 40px;
+  border-top-left-radius: 40px;
+}
+
+.carousel-status {
+  display: none;
+}
+
+.carousel {
+  border-top-left-radius: 40px;
+    border-bottom-right-radius: 40px;
 }
 
 @layer utilities {

@@ -4,4 +4,6 @@ export class AddDto {
   email: string;
   fio: string;
   locale: string;
+  bounus: number;
+  orders: number;
 }

@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class PhotoService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async pushPhoto(dto: PushPhotoDto) {
     const photoFromDB = await this.prisma.staticPhoto.findFirst({

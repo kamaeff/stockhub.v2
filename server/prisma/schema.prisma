@@ -16,9 +16,10 @@ model User {
   chat_id  String @unique
   username String
 
-  email  String
-  fio    String
-  locale String
+  email  String @default("none")
+  fio    String @default("none")
+  locale String @default("none")
+  bonus  Int    @default(0)
 
   basket UserBasket[]
   orders UserOrders[]
@@ -44,6 +45,7 @@ model UserOrders {
   id       Int             @id @default(autoincrement())
   order_id Int
   status   userOrderStatus
+  count    Int             @default(0)
 
   product Product[]
   User    User?     @relation(fields: [userId], references: [id])
