@@ -33,7 +33,7 @@ export default function Header({ searchParams }: SearchParamProps) {
         <Home color='black' size={32} />
       </Link>
 
-      <Image className="w-60" src={logo} priority={true}  alt='logo' />
+      <Image className="w-60" src={logo} priority={true} alt='logo' />
 
       <Link
         href='/?basket=true'

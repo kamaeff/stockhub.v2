@@ -1,15 +1,22 @@
 'use client'
-import { Search, SlidersHorizontal } from 'lucide-react'
 import Link from 'next/link'
-import React, { useState, Component } from 'react'
+import Image from 'next/image'
+import React, { useState } from 'react'
+
 import { AnimatePresence, motion } from 'framer-motion'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
-import Slide from '../../../public/Group 18.png'
+import { Search, SlidersHorizontal } from 'lucide-react'
 
-import Filter from './Filter'
-import Image from 'next/image'
+import Slide from '../../../public/Group 18.png'
+import product from '../../../public/product.png'
+import basketPic from '../../../public/basket.svg'
+
+import Filter from './components/Filter'
+import Card from './components/Card'
+
+import './Main.scss'
 
 type SearchParamProps = {
   searchParams: Record<string, string> | null | undefined
@@ -27,6 +34,7 @@ export default function Main({ searchParams }: SearchParamProps) {
   }
 
   const filter = searchParams?.filter
+  const card = searchParams?.card
 
   return (
     <>
@@ -47,6 +55,84 @@ export default function Main({ searchParams }: SearchParamProps) {
             <SlidersHorizontal size={28} />
           </Link>
         </div>
+
+        <div className='flex justify-center items-center m-auto bg-white mt-3 carousel'>
+          <Carousel
+            infiniteLoop={true}
+            autoPlay={true}
+            interval={5000}
+            showThumbs={false}
+          >
+            <div>
+              <Image className='' src={Slide} priority={true} alt='logo' />
+            </div>
+            <div>
+              <Image className='' src={Slide} priority={true} alt='logo' />
+            </div>
+            <div>
+              <Image className='' src={Slide} priority={true} alt='logo' />
+            </div>
+          </Carousel>
+        </div>
+
+        <Link className='m-auto' href='/?card=true' onClick={openModal}>
+          <div className="flex items-center justify-around m-auto product bg-white">
+            <Image className='ms-3' src={product} width={197} height={170} alt='product' />
+            <div className="grid justify-center text-center">
+              <p className='max-w-40 text-left text-lg leading-5 italic'>Jordan 4 Retro SE Craft Photon Dust</p>
+              <div className="flex gap-2 mt-3">
+                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
+                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
+                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
+                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
+              </div>
+
+              <div className="flex justify-between mt-14">
+                <p className='font-medium italic text-xl'>23 457₽</p>
+
+                <Image className="size-7" src={basketPic} priority={true} alt='basket' />
+              </div>
+            </div>
+          </div>
+        </Link>
+
+        <Link className='m-auto' href='/?card=true' onClick={openModal}>
+          <div className="flex items-center justify-around m-auto product bg-white">
+            <Image className='ms-3' src={product} width={197} height={170} alt='product' />
+            <div className="grid justify-center text-center">
+              <p className='max-w-40 text-left text-lg leading-5 italic'>Jordan 4 Retro SE Craft Photon Dust</p>
+              <div className="flex gap-2 mt-3">
+                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
+                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
+                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
+                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
+              </div>
+
+              <div className="flex justify-between mt-14">
+                <p className='font-medium italic text-xl'>23 457₽</p>
+
+                <Image className="size-7" src={basketPic} priority={true} alt='basket' />
+              </div>
+            </div>
+          </div>
+        </Link>
+
+
+        {/* TODO: Сделать единый файл для анимаци вывода окон */}
+        <AnimatePresence>
+          {card && isModalOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 1000 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 1000 }}
+              transition={{ duration: 0.5 }}
+              className='fixed inset-0 modal'
+            >
+              <Card closeModal={closeModal} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <AnimatePresence>
           {filter && isModalOpen && (
             <motion.div
@@ -60,21 +146,7 @@ export default function Main({ searchParams }: SearchParamProps) {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
 
-      <div className='my-2 mx-auto lg:w-3/4'></div>
-      <div className="w-96 m-auto bg-white carousel">
-        <Carousel infiniteLoop={true} autoPlay={true} interval={5000} showThumbs={false}>
-          <div>
-            <Image className='' src={Slide} alt='logo' />
-          </div>
-          <div>
-            <Image className='' src={Slide} alt='logo' />
-          </div>
-          <div>
-            <Image className='' src={Slide} alt='logo' />
-          </div>
-        </Carousel>
       </div>
     </>
   )

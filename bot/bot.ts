@@ -21,6 +21,7 @@ console.log("App create by Anton Kamaev");
 bot.onText(/\/start/, async (msg) => {
   const {
     chat: { id, first_name },
+    message_id
   } = msg;
 
   const data: createUserDto = {
@@ -39,6 +40,10 @@ bot.onText(/\/start/, async (msg) => {
         parse_mode: "HTML",
       },
     );
+
+  if (message_id && message_id - 2) {
+    await bot.deleteMessage(id, message_id - 1)
+  }
 
   await bot.sendPhoto(id, Buffer.from(photo.photo.data), {
     caption: photo.caption,
@@ -71,7 +76,7 @@ bot.on("callback_query", async (callbackQuery: CallbackQuery) => {
     bot.deleteMessage(chatId, messageId);
     return bot.sendMessage(
       chatId,
-      "Error\n\n<i>Используй <b>/start</b> для перезапуска бота</i>",
+      "☠️Кажется я перезапускался\n<i>💭Используй <b>/start</b> для перезапуска бота</i>",
       {
         parse_mode: "HTML",
       },
@@ -125,7 +130,7 @@ bot.on("text", async (msg) => {
         break;
 
       case "none":
-        bot.deleteMessage(id, message_id);
+        // bot.deleteMessage(id, message_id);
         break;
     }
   }

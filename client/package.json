@@ -23,6 +23,7 @@
     "react-dom": "^18",
     "react-responsive-carousel": "^3.2.23",
     "sass": "^1.71.1",
+    "sharp": "^0.33.2",
     "sonner": "^1.4.2",
     "tailwind-variants": "^0.2.0"
   },

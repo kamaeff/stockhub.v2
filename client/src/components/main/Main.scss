@@ -1,0 +1,29 @@
+.carousel-status {
+  display: none;
+}
+
+.carousel {
+  max-width: 410px;
+  height: 250px;
+
+  align-items: center;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 60px;
+}
+
+.slide img {
+  max-width: 280px;
+  height: 250px;
+
+  margin-top: -30px;
+}
+
+.product {
+  max-width: 410px;
+  margin-top: 20px;
+  height: 210px;
+
+  border-radius: 12px;
+}
