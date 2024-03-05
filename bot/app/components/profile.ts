@@ -70,6 +70,7 @@ async function push_profile(
     );
   } else {
     console.log("User profile not found.");
+    return false
   }
 }
 

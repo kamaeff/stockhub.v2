@@ -18,6 +18,7 @@ interface UserStorage {
 let userStorage: UserStorage = {};
 
 console.log("App create by Anton Kamaev");
+
 bot.onText(/\/start/, async (msg) => {
   const {
     chat: { id, first_name },
@@ -32,22 +33,24 @@ bot.onText(/\/start/, async (msg) => {
   await add_user(data);
   const photo = await getPhoto("logo");
 
-  if (photo === false)
-    bot.sendMessage(
+  if (photo === false) {
+    await bot.sendMessage(
       id,
       "error\n\n<i>Используй <b>/start</b> для перезапуска бота</i>",
       {
         parse_mode: "HTML",
       },
     );
+  }
 
-  // TODO: Подумать над обновлением и удалением сообщений
+  // FIX: Сделать логику удаления сообщений
+
   // if (message_id && message_id - 2) {
   //   await bot.deleteMessage(id, message_id - 1)
   // }
 
   await bot.sendPhoto(id, Buffer.from(photo.photo.data), {
-    caption: photo.caption,
+    caption: `<b>✌🏻 Yo ${first_name}! </b>${photo.caption}`,
     parse_mode: "HTML",
     reply_markup: {
       inline_keyboard: [
@@ -107,9 +110,17 @@ bot.on("callback_query", async (callbackQuery: CallbackQuery) => {
       );
       break;
 
-    // TODO: Сделать получение профиля (см push_profile)
     case "profile":
-      await push_profile(bot, username, chatId, messageId);
+      const res = await push_profile(bot, username, chatId, messageId);
+      if (res === false) {
+        await bot.sendMessage(
+          chatId,
+          "☠️Кажется я перезапускался\n<i>💭Используй <b>/start</b> для перезапуска бота</i>",
+          {
+            parse_mode: "HTML",
+          },
+        );
+      }
       break;
   }
 });

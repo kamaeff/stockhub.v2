@@ -1,19 +1,19 @@
 'use client'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 import React, { useState } from 'react'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
-import { ArrowBigUpDash, Search, SlidersHorizontal } from 'lucide-react'
+import { ArrowBigUpDash, Footprints, Search, Shirt, SlidersHorizontal } from 'lucide-react'
 
-import slide from '../../../public/Group 18.png'
+import slide from '../../../public/Shooe.png'
 import product from '../../../public/product.png'
 
-import Filter from './components/Filter'
 import Card from './components/Card'
+import Filter from './components/Filter'
 
 import './Main.scss'
 
@@ -38,21 +38,38 @@ export default function Main({ searchParams }: SearchParamProps) {
   return (
     <>
       <div className=''>
-        <div className='flex gap-2 justify-center items-center -mt-3'>
-          <div className='flex gap-1.5 p-3.5 bg-white rounded-lg'>
-            <Search size={28} />
-            <input
-              className='w-72 text-xl border-white outline-none'
-              placeholder='Поиск'
-            ></input>
+        <div className="">
+          <div className='flex gap-2 justify-center items-center -mt-3'>
+            <div className='flex gap-1.5 p-3.5 bg-white rounded-lg shadow-lg'>
+              <Search size={28} />
+              <input
+                className='w-72 text-xl border-white outline-none'
+                placeholder='Поиск'
+              ></input>
+            </div>
+            <Link
+              href='/?filter=true'
+              onClick={openModal}
+              className='p-3.5 bg-white rounded-lg shadow-lg'
+            >
+              <SlidersHorizontal size={28} />
+            </Link>
           </div>
-          <Link
-            href='/?filter=true'
-            onClick={openModal}
-            className='p-3.5 bg-white rounded-lg'
-          >
-            <SlidersHorizontal size={28} />
-          </Link>
+
+          {/* TODO: Сделать логику вывода выбранных фильтров */}
+        </div>
+
+        <div className="w-96 flex m-auto justify-between my-3">
+          <button className='flex items-center text-center gap-3 px-12 py-2 border-white bg-white rounded-lg'>
+            <Shirt size={30} />
+            <p>Одежда</p>
+          </button>
+
+          <button className='flex items-center text-center gap-3 px-12 py-2 border-white bg-white rounded-lg'>
+            <Footprints />
+            <p>Обувь</p>
+          </button>
+
         </div>
 
         <div className='flex justify-center items-center m-auto bg-white mt-3 main__carousel'>
