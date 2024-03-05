@@ -41,9 +41,10 @@ bot.onText(/\/start/, async (msg) => {
       },
     );
 
-  if (message_id && message_id - 2) {
-    await bot.deleteMessage(id, message_id - 1)
-  }
+  // TODO: Подумать над обновлением и удалением сообщений
+  // if (message_id && message_id - 2) {
+  //   await bot.deleteMessage(id, message_id - 1)
+  // }
 
   await bot.sendPhoto(id, Buffer.from(photo.photo.data), {
     caption: photo.caption,

@@ -7,11 +7,10 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
-import { Search, SlidersHorizontal } from 'lucide-react'
+import { ArrowBigUpDash, Search, SlidersHorizontal } from 'lucide-react'
 
-import Slide from '../../../public/Group 18.png'
+import slide from '../../../public/Group 18.png'
 import product from '../../../public/product.png'
-import basketPic from '../../../public/basket.svg'
 
 import Filter from './components/Filter'
 import Card from './components/Card'
@@ -56,7 +55,7 @@ export default function Main({ searchParams }: SearchParamProps) {
           </Link>
         </div>
 
-        <div className='flex justify-center items-center m-auto bg-white mt-3 carousel'>
+        <div className='flex justify-center items-center m-auto bg-white mt-3 main__carousel'>
           <Carousel
             infiniteLoop={true}
             autoPlay={true}
@@ -64,33 +63,52 @@ export default function Main({ searchParams }: SearchParamProps) {
             showThumbs={false}
           >
             <div>
-              <Image className='' src={Slide} priority={true} alt='logo' />
+              <Image className='slider__item' src={slide} priority={true} alt='logo' />
             </div>
             <div>
-              <Image className='' src={Slide} priority={true} alt='logo' />
+              <Image className='slider__item' src={slide} priority={true} alt='logo' />
             </div>
             <div>
-              <Image className='' src={Slide} priority={true} alt='logo' />
+              <Image className='slider__item' src={slide} priority={true} alt='logo' />
             </div>
           </Carousel>
         </div>
 
         <Link className='m-auto' href='/?card=true' onClick={openModal}>
           <div className="flex items-center justify-around m-auto product bg-white">
-            <Image className='ms-3' src={product} width={197} height={170} alt='product' />
-            <div className="grid justify-center text-center">
-              <p className='max-w-40 text-left text-lg leading-5 italic'>Jordan 4 Retro SE Craft Photon Dust</p>
-              <div className="flex gap-2 mt-3">
-                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
-                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
-                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
-                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
+            <div className="product__carousel">
+              <Carousel
+                infiniteLoop={true}
+                autoPlay={true}
+                interval={3000}
+                showThumbs={false}
+              >
+                <div>
+                  <Image className='' src={product} priority={true} alt='logo' />
+                </div>
+                <div>
+                  <Image className='' src={product} priority={true} alt='logo' />
+                </div>
+                <div>
+                  <Image className='' src={product} priority={true} alt='logo' />
+                </div>
+              </Carousel>
+            </div>
+            <div className="grid justify-center">
+              <p className='max-w-40 text-left text-xl leading-5 italic'>Jordan 4 Retro SE Craft Photon Dust</p>
+              <div className="flex flex-col justify-between mt-3">
+                <p className='font-medium'>Размеры: </p>
+                <div className="flex gap-2 mt-1">
+                  <p className='text-sm text-center italic rounded-lg'>8, </p>
+                  <p className='text-sm text-center italic rounded-lg'>8.5, </p>
+                  <p className='text-sm text-center italic rounded-lg'>9, </p>
+                  <p className='text-sm text-center italic rounded-lg'>9.5</p>
+                </div>
               </div>
 
-              <div className="flex justify-between mt-14">
-                <p className='font-medium italic text-xl'>23 457₽</p>
-
-                <Image className="size-7" src={basketPic} priority={true} alt='basket' />
+              <div className="flex justify-between items-center mt-1">
+                <p className='font-medium italic text-xl p-2 bg-gray-100 rounded-lg'>23 457₽</p>
+                <ArrowBigUpDash size={30} />
               </div>
             </div>
           </div>
@@ -98,20 +116,39 @@ export default function Main({ searchParams }: SearchParamProps) {
 
         <Link className='m-auto' href='/?card=true' onClick={openModal}>
           <div className="flex items-center justify-around m-auto product bg-white">
-            <Image className='ms-3' src={product} width={197} height={170} alt='product' />
-            <div className="grid justify-center text-center">
-              <p className='max-w-40 text-left text-lg leading-5 italic'>Jordan 4 Retro SE Craft Photon Dust</p>
-              <div className="flex gap-2 mt-3">
-                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
-                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
-                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
-                <p className='bg-gray-100 px-3 py-2 text-sm text-center italic rounded-lg'>8</p>
+            <div className="product__carousel">
+              <Carousel
+                infiniteLoop={true}
+                autoPlay={true}
+                interval={3000}
+                showThumbs={false}
+              >
+                <div>
+                  <Image className='' src={product} priority={true} alt='logo' />
+                </div>
+                <div>
+                  <Image className='' src={product} priority={true} alt='logo' />
+                </div>
+                <div>
+                  <Image className='' src={product} priority={true} alt='logo' />
+                </div>
+              </Carousel>
+            </div>
+            <div className="grid justify-center">
+              <p className='max-w-40 text-left text-xl leading-5 italic'>Jordan 4 Retro SE Craft Photon Dust</p>
+              <div className="flex flex-col justify-between mt-3">
+                <p className='font-medium'>Размеры: </p>
+                <div className="flex gap-2 mt-1">
+                  <p className='text-sm text-center italic rounded-lg'>8, </p>
+                  <p className='text-sm text-center italic rounded-lg'>8.5, </p>
+                  <p className='text-sm text-center italic rounded-lg'>9, </p>
+                  <p className='text-sm text-center italic rounded-lg'>9.5</p>
+                </div>
               </div>
 
-              <div className="flex justify-between mt-14">
-                <p className='font-medium italic text-xl'>23 457₽</p>
-
-                <Image className="size-7" src={basketPic} priority={true} alt='basket' />
+              <div className="flex justify-between items-center mt-1">
+                <p className='font-medium italic text-xl p-2 bg-gray-100 rounded-lg'>23 457₽</p>
+                <ArrowBigUpDash size={30} />
               </div>
             </div>
           </div>
