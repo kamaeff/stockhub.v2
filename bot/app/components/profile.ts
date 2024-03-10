@@ -9,6 +9,8 @@ async function push_profile(
 ) {
   const id = chatId.toString();
   const info = await getProfile(id);
+
+  const check = info.fio ? "" : (info.email ? "" : (info.locale ? "" : "💭 Заполнить информацию"));
   if (info) {
     await bot.editMessageCaption(
       `📈 <b>Вот твоя стата ${username}:</b>\n\n` +
@@ -47,17 +49,18 @@ async function push_profile(
               {
                 text:
                   info.email === "none"
-                    ? "✉️ Заполнить email"
+                    ? ""
                     : "✉️ Поменять email",
                 callback_data: "email",
               },
               {
                 text:
-                  info.fio === "none" ? "👤 Заполнить ФИО" : "👤 Изменить ФИО",
+                  info.fio === "none" ? "" : "👤 Изменить ФИО",
                 callback_data: "fio",
               },
             ],
-
+            [
+            ],
             [
               {
                 text: "🏠 Главное меню",

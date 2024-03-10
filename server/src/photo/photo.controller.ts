@@ -5,9 +5,9 @@ import {
   UsePipes,
   ValidationPipe,
   Post,
-} from '@nestjs/common';
-import { PhotoService } from './photo.service';
-import { PushPhotoDto } from 'src/dto/pushPhoto.dto';
+} from '@nestjs/common'
+import {PhotoService} from './photo.service'
+import {PushPhotoDto} from 'src/dto/pushPhoto.dto'
 
 @Controller('photo')
 export class PhotoController {
@@ -17,6 +17,6 @@ export class PhotoController {
   @HttpCode(200)
   @Post('get')
   async pushphoto(@Body() dto: PushPhotoDto) {
-    return this.photoService.pushPhoto(dto);
+    return this.photoService.pushPhoto(dto)
   }
 }

@@ -1,8 +1,8 @@
-import { Blob } from 'buffer';
+import {Blob} from 'buffer'
 
 export class PushPhotoDto {
-  id: number;
-  name: string;
-  caption: string;
-  photo: Buffer;
+  id: number
+  name: string
+  caption: string
+  photo: Buffer
 }
