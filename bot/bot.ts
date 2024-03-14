@@ -78,7 +78,6 @@ bot.on('callback_query', async (callbackQuery: CallbackQuery) => {
   const messageId: number = callbackQuery.message?.message_id || 0
 
   if (!chatId || !username || !messageId || !userStorage[chatId]) {
-    await bot.deleteMessage(chatId, messageId)
     return bot.sendMessage(
       chatId,
       '☠️Кажется я перезапускался\n<i>💭Используй <b>/start</b> для перезапуска бота</i>',

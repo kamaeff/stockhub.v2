@@ -38,35 +38,35 @@ export class UserService {
     return userWithOrdersCount
   }
 
-  async getUser(dto: AddDto) {
-    const getuser = await this.prisma.user.findFirst({
+  async getUser(chat_id: string) {
+    const user = await this.prisma.user.findFirst({
       where: {
-        chat_id: dto.chat_id,
+        chat_id: chat_id,
       },
       include: {
         orders: true,
       },
     })
 
-    const orders = await this.prisma.userOrders.count({
-      where: {
-        userId: getuser.id,
-      },
-    })
-
-    if (!getuser) {
-      throw new BadRequestException(`Пользователь с ${dto.chat_id} не найден`)
+    if (!user) {
+      throw new BadRequestException(`Пользователь с ${chat_id} не найден`)
     }
 
-    const response = {
-      locale: getuser.locale,
-      email: getuser.email,
-      fio: getuser.fio,
-      bonus: getuser.bonus,
-      orders: orders,
+    let ordersCount = 0
+    if (user.id) {
+      ordersCount = await this.prisma.userOrders.count({
+        where: {
+          userId: user.id,
+        },
+      })
     }
 
-    console.log(response)
-    return response
+    return {
+      locale: user.locale,
+      email: user.email,
+      fio: user.fio,
+      bonus: user.bonus,
+      orders: ordersCount,
+    }
   }
 }

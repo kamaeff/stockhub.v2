@@ -47,15 +47,11 @@ async function push_profile(
             ],
             [
               {
-                text:
-                  info.email === "none"
-                    ? ""
-                    : "✉️ Поменять email",
+                text: "✉️ Поменять email",
                 callback_data: "email",
               },
               {
-                text:
-                  info.fio === "none" ? "" : "👤 Изменить ФИО",
+                text: "👤 Поменять ФИО",
                 callback_data: "fio",
               },
             ],

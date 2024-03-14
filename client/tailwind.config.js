@@ -1,22 +1,8 @@
-import { COLORS } from './src/constants/color.constants'
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
-  mode: 'jit',
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}'
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {
-      colors: COLORS,
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
-      }
-    }
+    extend: {},
   },
-  plugins: []
-}
+  plugins: [],
+};

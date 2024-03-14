@@ -1,6 +1,8 @@
 import {
+  BadRequestException,
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
   UsePipes,
@@ -22,8 +24,12 @@ export class UserController {
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Post('get')
-  async getuser(@Body() dto: AddDto) {
-    return this.userService.getUser(dto)
+  @Get('get')
+  async getUser(@Body() dto: AddDto) {
+    if (!dto.chat_id) {
+      throw new BadRequestException('Не указан chat_id')
+    }
+
+    return this.userService.getUser(dto.chat_id)
   }
 }
