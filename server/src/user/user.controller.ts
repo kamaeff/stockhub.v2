@@ -24,7 +24,7 @@ export class UserController {
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Get('get')
+  @Post('get')
   async getUser(@Body() dto: AddDto) {
     if (!dto.chat_id) {
       throw new BadRequestException('Не указан chat_id')

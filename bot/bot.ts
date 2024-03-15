@@ -17,6 +17,7 @@ interface UserStorage {
   [key: number]: {status: string; caption: string}
 }
 let userStorage: UserStorage = {}
+const URL = process.env.URL
 
 console.log('App create by Anton Kamaev')
 
@@ -40,7 +41,7 @@ bot.onText(/\/start/, async msg => {
       'error\n\n<i>Используй <b>/start</b> для перезапуска бота</i>',
       {
         parse_mode: 'HTML',
-      },
+      }
     )
   }
 
@@ -83,7 +84,7 @@ bot.on('callback_query', async (callbackQuery: CallbackQuery) => {
       '☠️Кажется я перезапускался\n<i>💭Используй <b>/start</b> для перезапуска бота</i>',
       {
         parse_mode: 'HTML',
-      },
+      }
     )
   }
 
@@ -100,13 +101,13 @@ bot.on('callback_query', async (callbackQuery: CallbackQuery) => {
               [
                 {
                   text: '⚡️ Начать пользоваться',
-                  web_app: {url: 'https://stockhub12.netlify.app'},
+                  web_app: {url: 'https://stockhub12.ru/'},
                 },
               ],
               [{text: '✌🏻 Мой профиль', callback_data: 'profile'}],
             ],
           } as InlineKeyboardMarkup,
-        },
+        }
       )
       break
 
@@ -118,7 +119,7 @@ bot.on('callback_query', async (callbackQuery: CallbackQuery) => {
           '☠️Кажется я перезапускался\n<i>💭 Используй <b>/start</b> для перезапуска бота</i>',
           {
             parse_mode: 'HTML',
-          },
+          }
         )
       }
       break
@@ -130,7 +131,7 @@ bot.on('callback_query', async (callbackQuery: CallbackQuery) => {
           chat_id: chatId,
           message_id: messageId,
           parse_mode: 'HTML',
-        },
+        }
       )
       userStorage[chatId] = {
         status: 'awaitLocale',
@@ -145,7 +146,7 @@ bot.on('callback_query', async (callbackQuery: CallbackQuery) => {
         '☠️Кажется я перезапускался\n<i>💭Используй <b>/start</b> для перезапуска бота</i>',
         {
           parse_mode: 'HTML',
-        },
+        }
       )
       break
   }

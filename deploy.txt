@@ -170,4 +170,4 @@ sudo certbot renew --dry-run
 If u update files, you should on server:
 
 
-git pull && pnpm run build && pm2 reload all
+git pull && yarn run build && pm2 reload all

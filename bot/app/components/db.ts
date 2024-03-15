@@ -1,61 +1,65 @@
-import { createUserDto } from "./types/db_types";
+import {createUserDto} from './types/db_types'
+import axios from 'axios'
 
 async function add_user(data: createUserDto) {
   try {
     const response = await fetch(`${process.env.URL}/user/add`, {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    });
+      headers: {'Content-Type': 'application/json'},
+    })
 
     if (response.ok) {
-      console.log("add user");
-      return true;
+      console.log('add user')
+      return true
     } else {
-      console.log("user already added");
-      return true;
+      console.log('user already added')
+      return true
     }
   } catch (error) {
-    console.error("Error adding user:", error);
-    return false;
+    console.error('Error adding user:', error)
+    return false
   }
 }
 
 async function getPhoto(data: string) {
+  console.log(process.env.URL)
   try {
-    const response = await fetch(`${process.env.URL}/photo/get`, {
-      method: "POST",
-      body: JSON.stringify({ data }),
-      headers: { "Content-Type": "application/json" },
-    });
+    const response = await axios.post(
+      `${process.env.URL}/photo/get`,
+      {data},
+      {
+        headers: {'Content-Type': 'application/json'},
+      }
+    )
 
-    if (!response.ok) {
-      throw new Error("Ошибка при отправке названия фото");
-    }
-
-    const result = await response.json();
-    return result;
+    return response.data
   } catch (error) {
-    console.error(error);
-    return false;
+    console.error(error)
+    return false
   }
 }
 
 async function getProfile(chat_id: string) {
+  console.log(typeof chat_id)
   try {
-    const response = await fetch(`${process.env.URL}/user/get`, {
-      method: "POST",
-      body: JSON.stringify({ chat_id }),
-      headers: { "Content-Type": "application/json" },
-    });
+    const user = await axios.post(
+      `${process.env.URL}/user/get`,
+      {chat_id},
+      {
+        headers: {'Content-Type': 'application/json'},
+      }
+    )
 
-    if (!response.ok) throw new Error("profile not found");
+    if (!user.data || Object.keys(user.data).length === 0) {
+      throw new Error('Profile not found')
+    }
 
-    const res = await response.json();
-    return res;
+    return user.data
   } catch (error) {
-    return false;
+    console.error(error)
+    return null
   }
 }
 
-export { add_user, getPhoto, getProfile };
+export {add_user, getPhoto, getProfile}
