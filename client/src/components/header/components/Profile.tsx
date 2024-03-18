@@ -1,4 +1,13 @@
-import {Loader, X} from 'lucide-react';
+import {
+  BookCheck,
+  CircleUser,
+  Coins,
+  Loader,
+  Mail,
+  MapPin,
+  PackageOpen,
+  X,
+} from 'lucide-react';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
@@ -6,8 +15,18 @@ import {setUser} from '../../../store/user/user.slice';
 import {RootState} from '../../../store/store';
 import {UseTg} from '../../../hooks/useTg';
 
+import './profile.scss';
+
 type ModalProps = {
   closeModal: () => void;
+};
+
+const iconMap: Record<string, React.ReactElement> = {
+  locale: <MapPin size={32} strokeWidth={1} />,
+  email: <Mail size={32} strokeWidth={1} />,
+  fio: <BookCheck size={32} strokeWidth={1} />,
+  bonus: <Coins size={32} strokeWidth={1} />,
+  orders: <PackageOpen size={32} strokeWidth={1} />,
 };
 
 const Profile = ({closeModal}: ModalProps) => {
@@ -16,11 +35,8 @@ const Profile = ({closeModal}: ModalProps) => {
   const userData = useSelector((state: RootState) => state.user.user);
 
   useEffect(() => {
-    tg.ready();
-    tg.expand();
     const userReq = async (chat_id: string) => {
-      if (chat_id !== undefined) {
-        console.log(chat_id, '\n', typeof chat_id);
+      if (chat_id) {
         try {
           const userFetch = await axios.post(
             `https://stockhub12.ru:4200/api/user/get`,
@@ -32,42 +48,50 @@ const Profile = ({closeModal}: ModalProps) => {
           console.log('userFetch data:', userFetch.data);
           dispatch(setUser(userFetch.data));
         } catch (err) {
-          console.log(err);
+          return null;
         }
       } else {
         console.log('skip');
       }
     };
-    userReq(user?.id.toString());
+    userReq(user?.id ? user?.id.toString() : '307777256');
   }, [tg, dispatch, user]);
 
   return (
-    <div className='profile'>
-      <a href='/'>
-        <X
-          onClick={closeModal}
-          className='absolute top-0 right-0 mt-5 mr-5'
-          size={36}
-        />
-      </a>
+    <>
+      <button type='button' onClick={closeModal}>
+        <X className='absolute top-0 right-0 mt-5 mr-5' size={30} />
+      </button>
 
-      <div className='mt-16'>
-        <h2 className='text-xl font-medium'>Твоя стата (тест):</h2>
+      <div className='mt-16 ml-3 profile'>
         {userData ? (
-          Object.entries(userData).map(([key, value]) => (
-            <p key={key}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}:{' '}
-              {value === 'none' ? 'Данные не заполнены' : value}
-            </p>
-          ))
+          <div className='mt-2'>
+            <div className='flex items-center '>
+              <CircleUser size={35} strokeWidth={1} />
+              <h2 className='text-lg font-medium'>
+                {user?.first_name ? user.first_name : 'Anton'}
+              </h2>
+            </div>
+
+            {Object.entries(userData).map(([key, value], index) => (
+              <div className='flex items-center mt-2' key={index}>
+                <div className='flex items-center font-medium'>
+                  <div className='me-2 profile__icon'>{iconMap[key]}</div>
+                  <span className='capitalize'>{key}:</span>
+                </div>
+                <span className='ms-2 italic'>
+                  {value === 'none' ? '🚫' : value}
+                </span>
+              </div>
+            ))}
+          </div>
         ) : (
-          <div className='flex items-center'>
-            <Loader className='animate-spin-slow spinner' size={32} />
-            <span className='text-lg'>Loading</span>
+          <div className='inline-block'>
+            <Loader className='animate-spin-slow spinner' size={40} />
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
